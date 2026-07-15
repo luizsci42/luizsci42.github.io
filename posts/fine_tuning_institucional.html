@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Modelo-TCC-DCOMP</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+</head>
+<body>
+<h1 id="introdução">Introdução</h1>
+<p>Devido ao crescimento exponencial da disponibilidade de dados e de
+poder computacional, os Grandes Modelos de Linguagem (do inglês,
+<em>Large Language Models</em>, LLMs) levaram a avanços significativos
+em diversas tarefas de Processamento de Linguagem Natural (do inglês,
+<em>Natural Language Processing</em>, NLP), como sumarização, tradução
+automática, análise de sentimentos e geração de texto <span
+class="citation" data-cites="wei2022emergent"></span>. No entanto, por
+serem treinados com dados generalistas, esses modelos apresentam
+frequentemente desempenho limitado em domínios especializados, nos quais
+há escassez de dados textuais públicos e, consequentemente,
+sub-representação durante o pré-treinamento <span class="citation"
+data-cites="shen2024tag"></span>. Como forma de mitigar essa limitação,
+técnicas de <em>fine-tuning</em> permitem que LLMs, como o GPT-4 e o
+LlaMA, sejam adaptados a contextos especializados, refinando seu
+desempenho em tarefas específicas.</p>
+<p>O <em>fine-tuning</em> aproveita os padrões aprendidos por um modelo
+de LLM pré-treinado, permitindo a transferência dos pesos de parâmetros
+ajustados para novas tarefas. Dessa forma, essa técnica reduz a
+necessidade de grandes volumes de dados rotulados, enquanto melhora o
+desempenho do modelo em domínios específicos <span class="citation"
+data-cites="parthasarathy2024ultimate"></span>. Entretanto,devido à
+própria natureza dos LLMs, que consistem em bilhões de parâmetros, os
+custos associados ao <em>fine-tuning</em> podem ser elevados e
+computacionalmente ineficientes <span class="citation"
+data-cites="pu2023empirical"></span>. Surgem então as técnicas de
+<em>Parameter-Efficient Fine-Tuning</em> (PEFT) que permitem o ajuste de
+um subconjunto de parâmetros, mantendo a maior parte dos parâmetros
+congelados, reduzindo drasticamente os custos computacionais associados
+<span class="citation"
+data-cites="parthasarathy2024ultimate"></span>.</p>
+<p>Com isso em vista, este trabalho tem como objetivo utilizar técnicas
+PEFT para analisar a viabilidade do uso de <em>fine-tuning</em> para o
+refinamento de linguagem institucional da UFS. Essa abordagem se faz
+necessária para que o refinamento possa ser feito em ambientes com
+recursos computacionais limitados.</p>
+<p>Para tal, será treinado um LLM a partir de documentos institucionais
+da UFS, tendo seu desempenho comparado ao do modelo pré-treinado base,
+anterior ao refinamento. O experimento é uma prova de conceito, mais
+voltada à adequação da linguagem específica da instituição do que à
+factualidade dos dados.</p>
+<h1 id="cap_exemplos">Fundamentação Teórica</h1>
+<h2 id="evolução-dos-modelos-de-nlp-para-llms">Evolução dos modelos de
+NLP para LLMs</h2>
+<p>Nesta seção, são introduzidos alguns conceitos fundamentais para o
+entendimento do presente trabalho. Será abordada, primeiramente, a
+evolução dos modelos de NLP ao advento dos LLMs, destacando alguns
+modelos disruptivos que se tornaram marcos históricos, devido às
+inovações que apresentaram em suas respectivas épocas.</p>
+<p>As primeiras abordagens de NLP utilizavam modelos estatísticos
+baseados em n-gramas que, por sua vez, são conjuntos de palavras que
+aparecem juntas. Os modelos estatísticos fazem a previsão de uma próxima
+palavra dados os n-gramas precedentes <span class="citation"
+data-cites="hu2023advancing"></span>. No entanto, por considerarem
+apenas as n palavras anteriores, esses modelos falham em capturar o
+contexto, resultando em limitações para estabelecer relações entre
+palavras em textos grandes.</p>
+<p>Diante desses problemas, o modelo TF-IDF surgiu como uma alternativa.
+Considerando a frequência de cada palavra em um documento, em relação à
+frequência da mesma palavra em um <em>corpus</em> linguístico, o TF-IDF
+consegue calcular as palavras mais relevantes em um texto <span
+class="citation" data-cites="ramos2003using"></span>. Dessa forma, o
+TF-IDF pode lidar com textos maiores, sem se limitar à janela de
+contexto de palavras vizinhas, como os n-gramas.</p>
+<p>Rompendo com as abordagens estatísticas e baseadas em frequência, o
+Word2Vec <span class="citation"
+data-cites="mikolov2013linguistic"></span> passou a utilizar
+representações vetoriais das palavras, conhecidas como <em>word
+embeddings</em>. Ao representar palavras em um espaço vetorial, o modelo
+permitiu que a semântica passasse a ser considerada, possibilitando o
+entendimento de relações como sinônimos e antônimos, além de operações
+aritméticas entre palavras. No entanto, uma das limitações dessa
+abordagem é que palavras como "banco", que possuem significados
+diferentes de acordo com o contexto, passam a ter a mesma representação
+vetorial, o que pode causar problemas de contexto dinâmico.</p>
+<p>A arquitetura <em>Transformers</em> <span class="citation"
+data-cites="vaswani2017attention"></span> utiliza o mecanismo de
+autoatenção (<em>self-attention)</em>, que analisa todas as palavras de
+uma frase, atribuindo pesos, de acordo com sua relevância para o
+contexto. Dessa forma, resolve o problema enfrentado pelo Word2Vec, ao
+considerar contexto dinâmico. Ou seja, significados diferentes para a
+mesma palavra podem agora ter representações vetoriais distintas.</p>
+<p>A arquitetura <em>Transformers</em> é composta por um codificador
+(<em>encoder</em>) e um decodificador <em>(decoder)</em>. O
+<em>encoder</em> é responsável por receber os <em>embeddings</em> e
+adicionar o mecanismo de <em>self-attention</em>, dando um maior peso às
+palavras consideradas relevantes, encaminhando a uma camada de redes
+neurais. O <em>decoder</em>, por sua vez, recebe a representações
+geradas pelo <em>encoder</em> e gera a saída, uma palavra por vez
+(autoregressivas).</p>
+<p>Entre os modelos baseados na arquitetura <em>Transformer</em>,
+destacam-se o <em>Bidirectional Encoder Representations from
+Transformers</em> (BERT) <span class="citation"
+data-cites="devlin2019bert"></span> e o <em>Generative Pre-Training
+Transformer</em> (GPT) <span class="citation"
+data-cites="radford2018improving"></span>. O BERT utiliza exclusivamente
+a arquitetura de <em>encoder</em> e emprega aprendizado bidirecional,
+permitindo a análise do contexto tanto anterior quanto posterior a cada
+palavra. Por outro lado, o GPT adota apenas a arquitetura de
+<em>decoder</em> e realiza previsões autoregressivas, estimando a
+próxima palavra com base nas palavras anteriores de um texto.</p>
+<h2 id="fine-tuning"><em>Fine-tuning</em></h2>
+<p>Dada a relevância desses modelos para a área de NLP, o
+<em>fine-tuning</em> se tornou a principal forma de adaptar os LLMs para
+tarefas de domínios específicos <span class="citation"
+data-cites="liu2023empirical"></span>, aproveitando o conhecimento
+prévio de modelos pré-treinados e evitando a necessidade de treinar todo
+um modelo do início.</p>
+<p>O <em>fine-tuning</em> convencional requer o treinamento de todos os
+parâmetros do modelo, substituindo a última camada pela nova camada
+ajustada à tarefa. Como a quantidade de parâmetros de um LLM pode chegar
+a bilhões, essa operação pode se tornar excessivamente custosa. Os
+métodos PEFT buscam, então, ajustar apenas um subconjunto do total de
+parâmetros, tornando o processo de <em>fine-tuning</em> mais viável.</p>
+<p>Dentre as técnicas de PEFT que serão abordadas no presente trabalho
+estão o <em>Adapter tuning</em>, que consiste na inserção de pequenos
+módulos entre as camadas <em>Transformer</em> e o <em>Low-Rank
+Adaptation</em> (LoRA) <span class="citation"
+data-cites="hu2022lora"></span>, que reduz os custos de ajuste do modelo
+ao congelar a maioria dos parâmetros e usando matrizes de decomposição
+para realizar o <em>fine-tuning</em>.</p>
+<h1 id="trabalhos-relacionados">Trabalhos relacionados</h1>
+<h2 id="domain-specific-finetuning-of-llms-using-peft-techniques">Domain
+Specific Finetuning of LLMs Using PEFT Techniques</h2>
+<p>Neste trabalho, <span class="citation"
+data-cites="gajulamandyam2025domain"></span> avaliam quatro técnicas de
+<em>fine-tuning</em> PEFT: LoRA, QLoRA, DoRA e <em>Prompt Tuning</em>,
+aplicadas a modelos de código aberto (<em>LLaMA 3.1 8B</em>, <em>Phi
+3.5</em> e <em>Gemma 2 9B</em>) nos domínios de direito imigratório e
+seguros. Os autores estabelecem um <em>benchmark</em> de desempenho
+utilizando um modelo <em>GPT-4o</em> customizado e aplicam o
+<em>framework</em> "<em>LLM-as-a-Judge"</em> para avaliar a relevância e
+a correção das respostas.</p>
+<p>Os resultados demonstram que as técnicas LoRA e QLoRA superam
+consistentemente as outras abordagens, oferecendo o equilíbrio ideal
+entre eficiência computacional e adaptação específica ao domínio. O
+estudo observou que a técnica QLoRA obteve melhor desempenho no domínio
+de imigração, que exige maior precisão em dados estruturados, enquanto o
+LoRA mostrou-se particularmente eficaz no domínio de seguros, que lida
+com maior diversidade de consultas. Por fim, o artigo conclui que o
+<em>Prompt Tuning</em>, apesar de ser computacionalmente leve, falha em
+capturar as nuances complexas de domínios especializados, e destaca que
+modelos menores, quando otimizados, podem rivalizar ou até superar
+modelos de uso geral maiores.</p>
+<h2
+id="modern-approaches-to-llama-fine-tuning-parameter-efficient-methods-for-targeted-domain">Modern
+Approaches to LLaMA Fine-Tuning: Parameter-Efficient Methods for
+Targeted Domain</h2>
+<p>Neste trabalho, <span class="citation"
+data-cites="yang2026modern"></span> apresentam uma análise abrangente de
+métodos de PEFT para modelos LLaMA, visando facilitar a adaptação a
+domínios especializados como saúde, governo, finanças e oceanografia,
+sem os custos computacionais elevados do <em>full fine-tuning</em>. Os
+autores avaliam técnicas como LoRA, QLoRA e LongLoRA, destacando que o
+LoRA proporciona uma melhoria de até 9 vezes na eficiência de
+treinamento, mantendo um desempenho competitivo com a adição de apenas
+uma fração de parâmetros treináveis. O estudo demonstra otimizações
+significativas de recursos, reduzindo o uso de memória GPU de 64GB para
+37GB e apontando potenciais reduções de custo de até 190 vezes em
+comparação com alternativas comerciais. O artigo conclui com
+recomendações práticas para a implementação, enfatizando que a qualidade
+dos dados de treinamento é o determinante principal para o sucesso da
+adaptação.</p>
+<h2
+id="low-resource-fine-tuning-of-llms-for-domain-specific-tasks">Low-Resource
+Fine-Tuning of LLMs for Domain-Specific Tasks</h2>
+<p>Neste trabalho, <span class="citation"
+data-cites="challa2025low"></span> investigam estratégias de
+<em>fine-tuning</em> eficiente em parâmetros (PEFT) para adaptar LLMs a
+domínios específicos, como saúde e energia, em ambientes com recursos
+computacionais limitados. Os autores avaliam técnicas como LoRA,
+<em>Adapters</em>, <em>Prompt Tuning</em> e <em>BitFit</em>, comparando
+seu desempenho, consumo de memória e tempo de processamento frente ao
+<em>full fine-tuning</em> em uma única GPU. Os resultados demonstram que
+o LoRA atinge um desempenho próximo ao do <em>full fine-tuning</em>
+(95-98%) utilizando apenas 0,5-1% dos parâmetros, sendo altamente eficaz
+para domínios com terminologia sensível, como na área de saúde. Por
+outro lado, os <em>Adapters</em> mostraram-se uma alternativa eficiente
+e modular para tarefas de classificação no setor de energia. O estudo
+conclui que a aplicação de métodos PEFT, especialmente estratégias
+híbridas, democratiza o acesso a modelos especializados ao equilibrar
+com sucesso a precisão da tarefa e o custo computacional.</p>
+<p>Em contraste aos trabalhos citados, que exploram a aplicação de
+técnicas de <em>fine-tuning</em> em domínios abrangentes como saúde,
+direito e finanças <span class="citation"
+data-cites="gajulamandyam2025domain challa2025low yang2026modern"></span>,
+utilizando frequentemente infraestruturas de alto desempenho, o que é
+proposto no presente trabalho é a adaptação de modelos de linguagem para
+o contexto específico da linguagem institucional da UFS. Enquanto as
+pesquisas referenciadas priorizam métricas de desempenho em
+<em>benchmarks</em> de mercado, este trabalho foca na prova de conceito
+sobre a adequação semântica de documentos oficiais, avaliando a
+viabilidade técnica da implementação dessas técnicas em ambientes de
+computação pessoal com recursos estritamente limitados. Busca-se, dessa
+forma, demonstrar que a personalização de modelos de linguagem pode ser
+uma prática acessível para instituições acadêmicas, independentemente de
+grandes investimentos em infraestrutura computacional.</p>
+<h1 id="método">Método</h1>
+<p>Nesta seção, serão descritos os procedimentos para o desenvolvimento
+da prova de conceito do presente trabalho, cujo objetivo é o estudo da
+viabilidade do uso de técnicas PEFT para o treinamento de LLM para o
+refinamento de linguagem natural, voltada ao ambiente institucional da
+UFS.</p>
+<p>Considerando a natureza experimental deste estudo e a premissa de
+viabilizar o treinamento em cenários de recursos computacionais
+limitados, a metodologia foi estruturada para garantir a
+reprodutibilidade dos experimentos e a clareza na análise do desempenho
+dos modelos. O processo de pesquisa foi organizado de forma a contemplar
+desde a curadoria dos dados institucionais até a avaliação comparativa
+do modelo refinado em relação ao seu estado base.</p>
+<p>O ambiente utilizado na execução do presente trabalho foi o Google
+Colab, com Unidades de Processamento Gráfico (do inglês, <em>Graphics
+Processing Unit, GPU</em>) T4, especificado, de acordo com o manual de
+referência <span class="citation" data-cites="nvidia2020t4"></span>, com
+memória 16 GB GDDR6, com largura de barramento de 256 bits e largura de
+banda de pico de até 320 GBytes/s, clock base de 585 MHz e boost máximo
+de 1590 MHz.</p>
+<p>Para viabilizar essa análise, a estrutura deste capítulo abrange: a
+descrição da coleta, limpeza e estruturação do conjunto de dados
+composto por documentos da UFS; a seleção e especificação do LLM base
+utilizado; a configuração dos experimentos de <em>fine-tuning</em> com
+as técnicas PEFT selecionadas; e a definição das métricas quantitativas
+e qualitativas utilizadas para a avaliação do desempenho e da qualidade
+do refinamento alcançado.</p>
+<h2 id="coleta-e-estruturação-do-conjunto-de-dados">Coleta e
+estruturação do conjunto de dados</h2>
+<p>Para a construção do conjunto de dados de treinamento, foram
+utilizados, como dados brutos, documentos no formato PDF, contendo
+resoluções e portarias da UFS. Os documentos brutos foram obtidos
+através do Sistema Eletrônico de Informações (SEI)<a href="#fn1"
+class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.
+Foram selecionados 180 documentos de portarias e 131 documentos de
+resoluções, todas publicadas entre 01/01/2025 a 31/12/2025.</p>
+<p>Para a criação do dataset de treinamento, foi utilizado o modelo
+<em>Gemini 2.5 Flash</em>, com o seguinte <em>prompt</em> <a
+href="#prompt_gemini_geracao" data-reference-type="ref+label"
+data-reference="prompt_gemini_geracao">[prompt_gemini_geracao]</a>:</p>
+<div class="codigo">
+<pre><code>&quot;Você é um agente especialista em geração de perguntas e respostas.
+Analise o documento fornecido e, a partir dele, gere uma pergunta e uma resposta relacionadas ao conteúdo do documento.
+Seu objetivo é criar um par de Pergunta e Resposta (QA) para finetuning de um modelo jurídico/institucional.
+Gere apenas uma pergunta e apenas uma resposta. Certifique-se que a pergunta seja baseada no conteúdo do documento fornecido.
+Certifique-se de que a resposta exista dentro do arquivo fornecido.
+Certifique-se de que a resposta gerada cite o documento fornecido.
+Certifique-se de copiar o texto integralmente para o campo &#39;contexto&#39;.
+
+- A pergunta deve simular uma dúvida de um aluno ou membro da comunidade.
+- A resposta deve ser formal, técnica e citar explicitamente artigos, parágrafos ou o nome da portaria presente no texto.
+- O campo &#39;contexto&#39; deve ser uma citação direta do documento, sem resumos.&quot;</code></pre>
+</div>
+<p>Para cada uma das resoluções, foram geradas oito perguntas e
+respostas, sem repetição, resultando em um conjunto de dados composto
+por 2450 linhas, cada linha trazendo a pergunta gerada, sua respectiva
+resposta e o contexto; ou seja, o documento utilizado como referência
+para a resposta.</p>
+<h2 id="seleção-e-especificação-do-modelo">Seleção e especificação do
+modelo</h2>
+<p>Para a modelagem, foi escolhido como modelo base o <em>Llama 3.1 8B
+Instruct</em><a href="#fn2" class="footnote-ref" id="fnref2"
+role="doc-noteref"><sup>2</sup></a>, devido à sua compatibilidade com o
+ambiente de execução supracitado. Desenvolvido pela <em>Meta</em>, o
+<em>Llama 3.1 8B Instruct</em> faz parte da família de modelos
+multilinguagem, lançados em Julho de 2024, com suporte aos idiomas
+Inglês, Alemão, Francês, Italiano, Português, Hindi, Espanhol e
+Tailandês , de acordo com a documentação do projeto.</p>
+<p>São modelos autoregressivos, com base em uma arquitetura
+<em>Transformers</em> otimizada. As versões <em>Instruct</em> incorporam
+técnicas de <em>Supervised Fine-Tuning (</em>SFT<em>)</em> e
+<em>Reinforcement Learning With Human Feedback</em> (RLHF). Os modelos
+dessa família tiveram como data de corte da sua base de conhecimento
+datada em dezembro de 2023.</p>
+<h2 id="configuração-e-parâmetros-de-fine-tuning">Configuração e
+parâmetros de <em>fine-tuning</em></h2>
+<p>O processo de treinamento foi conduzido utilizando a biblioteca
+<em>SFTTrainer</em> <em>Supervised Fine-tuning Trainer</em>, integrada
+ao ecossistema <em>Transformers</em> da Hugging Face. Para viabilizar o
+refinamento do modelo <em>Llama 3.1 8B Instruct</em> em um ambiente de
+hardware limitado (GPU T4 com 16 GB de VRAM), optou-se pela utilização
+da técnica PEFT <em>Low-Rank Adaptation (</em>LoRA<em>)</em>.</p>
+<p>A estratégia de <em>prompt</em> adotada consistiu na formatação dos
+dados em pares de instrução, estruturados para o formato de diálogo do
+Llama 3. O padrão de entrada foi definido pela função
+<code>format_prompt()</code>, que encapsula o contexto institucional da
+UFS, a pergunta formulada e a respectiva resposta esperada, utilizando
+os <em>tokens</em> especiais <code>&lt;|begin_of_text|&gt;</code>,
+<code>&lt;|start_header_id|&gt;</code>,
+<code>&lt;|end_header_id|&gt;</code> e
+<code>&lt;|eot_id|&gt;</code>.</p>
+<p>A configuração do LoRA, definida através da classe
+<em>LoraConfig</em>, visou reduzir o número de parâmetros treináveis ao
+focar nas camadas de projeção de consulta <em>(query)</em> e valor
+<em>(value)</em>, conforme os parâmetros apresentados na <a
+href="#tab-params_lora_train" data-reference-type="ref+label"
+data-reference="tab-params_lora_train">4.1</a>.</p>
+<div id="tab-params_lora_train">
+<table>
+<caption>Parâmetros de configuração do LoRA.</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Parâmetro</strong></th>
+<th style="text-align: left;"><strong>Valor</strong></th>
+<th style="text-align: left;"><strong>Descrição</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">r (Rank)</td>
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">Dimensão das matrizes de baixo posto.</td>
+</tr>
+<tr>
+<td style="text-align: left;">lora_alpha</td>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">Fator de escalonamento para os pesos.</td>
+</tr>
+<tr>
+<td style="text-align: left;">lora_dropout</td>
+<td style="text-align: left;">0.1</td>
+<td style="text-align: left;">Taxa de dropout para regularização.</td>
+</tr>
+<tr>
+<td style="text-align: left;">target_modules</td>
+<td style="text-align: left;">["q_proj", "v_proj"]</td>
+<td style="text-align: left;">Camadas alvo do ajuste.</td>
+</tr>
+<tr>
+<td style="text-align: left;">bias</td>
+<td style="text-align: left;">"none"</td>
+<td style="text-align: left;">Define o tratamento de viés.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Para otimizar o consumo de memória durante o treinamento, foram
+configurados hiperparâmetros de eficiência. O otimizador
+<code>paged_adamw_32bit</code> foi empregado para gerenciar a paginação
+de memória entre a GPU e a CPU. Adicionalmente, foi ativado o suporte a
+precisão reduzida (<code>fp16=True</code>) e o ruído <em>NEFTune</em>
+<code>(neftune_noise_alpha=5)</code>, que atua na regularização do
+treinamento para evitar <em>overfitting</em> em conjuntos de dados
+menores. A <a href="#tab-hiperparams_train"
+data-reference-type="ref+label"
+data-reference="tab-hiperparams_train">4.2</a> resume os argumentos de
+treinamento utilizados.</p>
+<div id="tab-hiperparams_train">
+<table>
+<caption>Hiperparâmetros de treinamento.</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Hiperparâmetro</strong></th>
+<th style="text-align: left;"><strong>Valor</strong></th>
+<th style="text-align: left;"><strong>Descrição</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">learning_rate</td>
+<td style="text-align: left;">5e-5</td>
+<td style="text-align: left;">Define a velocidade com que o modelo
+ajusta seus pesos durante o treino.</td>
+</tr>
+<tr>
+<td style="text-align: left;">num_train_epochs</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">Número total de passagens completas pelo
+conjunto de dados de treinamento.</td>
+</tr>
+<tr>
+<td style="text-align: left;">batch_size</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Número de exemplos processados
+simultaneamente em cada GPU.</td>
+</tr>
+<tr>
+<td style="text-align: left;">gradient_accumulation_steps</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Passos de gradiente acumulados antes de
+efetuar a atualização dos pesos.</td>
+</tr>
+<tr>
+<td style="text-align: left;">max_seq_length</td>
+<td style="text-align: left;">512</td>
+<td style="text-align: left;">Limite máximo de tokens processados por
+cada entrada do modelo.</td>
+</tr>
+<tr>
+<td style="text-align: left;">early_stop_patience</td>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Número de épocas sem melhora na métrica
+monitorada antes de interromper o treino.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>O ciclo de treinamento foi monitorado por meio do <em>callback</em>
+<em>EarlyStoppingCallback</em>, definido em 2 épocas, configuração
+necessária para garantir que o treinamento fosse interrompido caso o
+modelo atingisse o ponto de convergência, evitando o desperdício de
+tempo, recursos computacionais e minimizando o risco de sobreajuste do
+modelo.</p>
+<h2 id="definição-das-métricas-de-avaliação">Definição das métricas de
+avaliação</h2>
+<p>Para avaliar o desempenho do modelo treinado, foram utilizadas
+abordagens quantitativas e qualitativas, através de diversas métricas de
+desempenho consolidadas na área de NLP. As métricas utilizadas avaliam
+diversos aspectos, como palavras utilizadas na resposta do modelo, via
+n-gramas; similaridade semântica, com base em <em>embeddings</em> e
+aspectos mais subjetivos, com o uso de LLM para avaliação. Nas seções
+seguintes, são definidas cada uma das métricas utilizadas.</p>
+<h3 id="métricas-baseadas-em-sobreposição">Métricas baseadas em
+sobreposição</h3>
+<p><strong>Bilingual Evaluation Understudy (BLEU):</strong> Utilizada
+principalmente na avaliação de traduções automáticas, o <em>Bilingual
+Evaluation Understudy</em> (BLEU) <span class="citation"
+data-cites="papineni-etal-2002-bleu"></span> é uma métrica baseada em
+n-gramas. Esse algoritmo verifica quantos grupos de palavras aparecem no
+texto original e no texto gerado por máquina. Essa métrica tem como
+saída um valor entre 0 e 1, indicando o quão similares são os textos.
+Quanto mais próximo de 1, maior a similaridade. Nesse sentido, uma das
+suas limitações é que o BLEU se limita à correspondência de termos, não
+avaliando, assim, a semântica.</p>
+<p><strong><em>Recall Oriented Understudy for Gisting Evaluation
+(Rouge)</em>:</strong> O <em>Rouge</em> <span class="citation"
+data-cites="lin2004rouge"></span> também é uma métrica projetada para
+avaliar a qualidade de textos gerados por máquina, que também faz uso de
+n-gramas. Diferentemente do BLEU, o Rouge é uma métrica mais voltada à
+revocação <em>(recall)</em> que à precisão. O Rouge avalia a
+similaridade entre o texto gerado pelo modelo e uma referência humana
+através de diferentes métricas, as quais:</p>
+<ul>
+<li><p>Rouge-N: Calcula a sobreposição de <em>n-gramas</em>. O Rouge-1
+(unigramas) é frequentemente utilizado para medir a cobertura de
+conteúdo informativo, enquanto o Rouge-2 (bigramas) avalia a fluidez e a
+coesão local.</p></li>
+<li><p>Rouge-L: Baseia-se na Maior Subsequência Comum (do inglês,
+<em>Longest Common Subsequence,</em>LCS). Esta métrica não exige que as
+palavras sejam consecutivas, capturando a estrutura da sentença e a
+organização dos dados, sendo menos rígida que métricas baseadas apenas
+em <em>n-gramas</em> adjacentes.</p></li>
+</ul>
+<h3 id="métricas-semânticas">Métricas semânticas</h3>
+<p><strong>Similaridade de Cosseno <em>(Cosine
+Similarity)</em>:</strong> Essa métrica é utilizada para quantificar a
+proximidade semântica entre textos, avaliando o ângulo entre seus
+vetores de <em>embeddings</em>. Também é uma métrica com o valor de 0 a
+1. Quanto mais próximo de 1, mais similares são os textos. Para dois
+vetores
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝒂</mi><annotation encoding="application/x-tex">\mathbf{a}</annotation></semantics></math>
+e
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝒃</mi><annotation encoding="application/x-tex">\mathbf{b}</annotation></semantics></math>,
+a similaridade de cosseno é definida como:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="normal">c</mi><mi mathvariant="normal">o</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">_</mi><mi mathvariant="normal">s</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">m</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">l</mi><mi mathvariant="normal">a</mi><mi mathvariant="normal">r</mi><mi mathvariant="normal">i</mi><mi mathvariant="normal">t</mi><mi mathvariant="normal">y</mi></mrow><mo stretchy="false" form="prefix">(</mo><mi mathvariant="bold-italic">𝒂</mi><mo>,</mo><mi mathvariant="bold-italic">𝒃</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mi mathvariant="bold-italic">𝒂</mi><mo>⋅</mo><mi mathvariant="bold-italic">𝒃</mi></mrow><mrow><mrow><mo stretchy="true" form="prefix">‖</mo><mi mathvariant="bold-italic">𝒂</mi><mo stretchy="true" form="postfix">‖</mo></mrow><mspace width="0.167em"></mspace><mrow><mo stretchy="true" form="prefix">‖</mo><mi mathvariant="bold-italic">𝒃</mi><mo stretchy="true" form="postfix">‖</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">\begin{equation}
+\mathrm{cos\_similarity}(\mathbf{a},\mathbf{b}) = \frac{\mathbf{a}\cdot\mathbf{b}}{\lVert\mathbf{a}\rVert\,\lVert\mathbf{b}\rVert}
+\end{equation}</annotation></semantics></math></p>
+<p>BERTScore: É uma métrica de avaliação automática que quantifica a
+similaridade entre textos gerados e referências humanas através do uso
+de <em>embeddings</em> contextuais. Ao contrário de métricas
+tradicionais que buscam a coincidência exata de <em>tokens</em> (como o
+BLEU ou ROUGE), o BERTScore avalia a proximidade semântica no espaço
+vetorial gerado por modelos de linguagem pré-treinados, como o BERT.</p>
+<p>O cálculo do BERTScore ocorre em três etapas principais:</p>
+<ol>
+<li><p>Representação Contextual: O modelo utiliza um modelo de linguagem
+(neste trabalho, um modelo multilíngue) para transformar cada
+<em>token</em> das sentenças gerada e de referência em
+<em>embeddings</em> que capturam o contexto da palavra na
+frase.</p></li>
+<li><p>Alinhamento e Similaridade: A métrica realiza um alinhamento
+ganancioso (<em>greedy matching</em>) para cada <em>token</em> da
+sentença gerada com o <em>token</em> mais similar da sentença de
+referência, utilizando a similaridade de cosseno entre seus
+vetores.</p></li>
+<li><p>Agregação: A partir das similaridades calculadas, são derivadas
+as métricas de Precisão (<em>precision</em>), <em>recall</em> e o
+<em>F1-Score</em>. A precisão indica o quão bem os <em>tokens</em> da
+resposta gerada correspondem aos da referência, enquanto a revocação
+indica o quanto do conteúdo da referência foi capturado pelo
+modelo.</p></li>
+</ol>
+<h3 id="avaliação-por-llm-as-a-judge">Avaliação por
+<em>LLM-as-a-Judge</em></h3>
+<p>O <em>LLM-as-a-Judge</em> é uma técnica de avaliação automatizada que
+utiliza um modelo de linguagem de grande porte, dotado de alta
+capacidade de raciocínio, para atuar como um auditor da qualidade das
+respostas geradas por outro modelo. Diferente de métricas estáticas,
+esta abordagem permite uma avaliação dinâmica, capaz de interpretar
+nuances semânticas, o tom de voz e a adesão a instruções complexas. O
+processo fundamenta-se na utilização de uma rubrica de avaliação clara,
+fornecida ao modelo juiz via <em>prompt</em>. O modelo juiz analisa o
+par pergunta-resposta, comparando-o com um gabarito de referência e,
+através de uma configuração de saída estruturada, atribui pontuações
+numéricas acompanhadas de justificativas técnicas.</p>
+<p>O uso dessa métrica traz algumas vantagens em relação às métricas
+supracitadas; enquanto métricas como o <em>BLEU</em> ou <em>Rouge</em>
+ignoram a intenção do usuário ou as nuances estilísticas do texto, o
+<em>LLM-as-a-Judge</em> pode ser instruído a verificar se a resposta
+mantém um estilo formal e burocrático, intrínseco a documentos
+institucionais. Além disso, o modelo juiz pode fornecer uma
+justificativa detalhada para a nota atribuída, permitindo identificar
+padrões de falhas, como alucinações factuais ou desvios de estilo, que
+métricas numéricas não revelariam, trazendo assim, mais
+interpretabilidade. Quanto à escalabilidade, a técnica permite avaliar
+centenas de inferências com baixo custo operacional, quando é
+financeiramente inviável utilizar uma equipe humana.</p>
+<h2 id="avaliação">Avaliação</h2>
+<p>A etapa de avaliação teve como objetivo mensurar o impacto do
+refinamento via técnicas PEFT, comparando a eficácia do modelo Llama 3.1
+8B Instruct em seu estado base com a versão submetida ao
+<em>fine-tuning</em> com dados institucionais da UFS. O procedimento de
+avaliação foi estruturado em três eixos: métricas de similaridade
+textual, métricas de similaridade semântica e uma avaliação qualitativa
+realizada via <em>LLM-as-a-Judge</em>.</p>
+<h3 id="procedimento-de-inferência">Procedimento de Inferência</h3>
+<p>Para ambos os modelos, o processo de geração de respostas utilizou o
+conjunto de dados de teste, composto por 100 amostras não vistas durante
+o treinamento. As inferências foram configuradas com temperatura de
+<strong>0.1</strong> para garantir a determinidade das respostas,
+penalidade de repetição de <strong>1.1</strong> e um limite máximo de
+<strong>256</strong> tokens por resposta, garantindo que o modelo se
+mantivesse conciso e aderente ao contexto institucional. As respostas
+geradas foram armazenadas em arquivos estruturados no formato CSV (do
+inglês, <em>Comma Separated Values)</em>.</p>
+<h3 id="métricas-quantitativas">Métricas Quantitativas</h3>
+<p>Para a similaridade léxica foram computadas as métricas ROUGE (1, 2 e
+L) e BLEU, que verificam a sobreposição de n-gramas entre a resposta do
+modelo e o gabarito oficial (resposta real). Similaridade Semântica:
+Para avaliar a proximidade de significado independentemente do
+vocabulário exato, utilizou-se o <em>BERTScore</em> (com modelo
+multilingue configurado para o idioma português) e a Similaridade de
+Cosseno, esta última operando sobre vetores de <em>embeddings</em>
+gerados pelo modelo <em>paraphrase-multilingual-MiniLM-L12-v2</em>.</p>
+<h3 id="avaliação-qualitativa">Avaliação qualitativa</h3>
+<p>Dada a natureza institucional dos documentos, métricas lexicais como
+ROUGE podem falhar ao não capturar o tom de voz e a formalidade
+burocrática necessária. Para sanar essa lacuna, adotou-se o modelo
+<em>Gemini 2.5 Flash</em> como auditor institucional. O modelo juiz
+operou sob uma rubrica de pontuação de 1 a 5, com o seguinte
+<em>prompt</em> de instruções <a href="#prompt_judge"
+data-reference-type="ref+label"
+data-reference="prompt_judge">[prompt_judge]</a>:</p>
+<div class="codigo">
+<pre><code>&quot;Você é um auditor sênior de comunicação institucional da Universidade Federal de Sergipe (UFS),
+especialista em manter a identidade, o tom de voz e a formalidade da universidade.
+
+Sua tarefa é avaliar a resposta gerada por um modelo de IA. Sua prioridade máxima é avaliar se a resposta:
+1. Mantém a Persona Institucional (Linguagem formal, burocrática, clara e adequada à Universidade Federal de Sergipe).
+2. Captura a Intenção da Pergunta (A resposta é útil e resolve a dúvida do usuário, mesmo que com pequenas imprecisões técnicas).
+
+Antes de pontuar, identifique:
+1. Tom de Voz: A linguagem está adequada a um documento oficial da Universidade Federal de Sergipe?
+2. Alinhamento Institucional: A resposta reconhece a Universidade Federal de Sergipe e usa a terminologia correta?
+3. Utilidade da Resposta: A resposta entrega o &quot;sentido&quot; correto, ainda que com erros periféricos em dados numéricos ou datas?
+4. Precisão Técnica: (Peso secundário) Existem erros técnicos graves que invalidam a informação principal?
+
+Rubrica de pontuação:
+Nota 5 (Excelente): Resposta perfeita em tom, linguagem, estrutura e precisão factual. Alinhamento total com a persona da Universidade Federal de Sergipe.
+Nota 4 (Bom): Excelente tom institucional e clareza. Captura a intenção da resposta perfeitamente, mas com erros mínimos (ex: uma data ou nome de departamento secundário) que não prejudicam a utilidade.
+Nota 3 (Aceitável): A resposta mantém o tom formal e burocrático da UFS e acerta a decisão/caminho principal (ex: confirma aprovação ou negação corretamente), mas comete erros em detalhes técnicos (datas, número de portaria, valores). A resposta é útil e demonstra que o modelo &quot;sabe&quot; como a instituição funciona.
+Nota 2 (Ruim): O tom de voz está incorreto ou a resposta, embora formal, falha ao capturar a intenção da pergunta, sendo inútil ou irrelevante.
+Nota 1 (Péssimo): Linguagem confusa, resposta desconexa com a pergunta do usuário, ou o modelo falha completamente em manter a persona da Universidade Federal de Sergipe, inventando uma identidade institucional errada.
+
+PERGUNTA: {pergunta}
+GABARITO: {referencia}
+RESPOSTA GERADA: {previsao}
+
+Responda APENAS no formato JSON seguindo o schema fornecido. Na justificativa, explique como a linguagem está alinhada à UFS e onde, especificamente, ocorreram as falhas factuais que impediram a nota máxima.&quot;</code></pre>
+</div>
+<h1 id="resultados-e-discussão">Resultados e Discussão</h1>
+<p>Este capítulo apresenta os resultados experimentais obtidos a partir
+da aplicação das técnicas de refinamento via <em>LoRA</em> no modelo
+<em>Llama 3.1 8B Instruct</em>, bem como a avaliação comparativa deste
+modelo refinado em relação ao seu estado base.</p>
+<p>O objetivo central desta análise é verificar se o refinamento do
+modelo com dados do corpus institucional da UFS resultou em um ganho
+mensurável de precisão factual, adequação à persona institucional e
+redução de alucinações. Para tanto, os dados obtidos durante o
+procedimento de inferência foram consolidados, normalizados e submetidos
+a testes estatísticos, cujos resultados são detalhados nas seções a
+seguir, acompanhados de uma discussão sobre as implicações de cada
+métrica para o uso prático do modelo no ambiente universitário.</p>
+<p>A <a href="#tab-resultados_avaliacao" data-reference-type="ref+label"
+data-reference="tab-resultados_avaliacao">5.1</a> traz um resumo
+comparativo de cada uma das métricas para o modelo base e para o modelo
+refinado:</p>
+<div id="tab-resultados_avaliacao">
+<table>
+<caption>Resultados das métricas de avaliação</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Métrica</strong></th>
+<th style="text-align: left;"><strong>Baseline (Llama 3.1
+Instruct)</strong></th>
+<th style="text-align: left;"><strong>Modelo Refinado</strong></th>
+<th style="text-align: left;"><strong>Delta</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ROUGE-1</td>
+<td style="text-align: left;">0,3350</td>
+<td style="text-align: left;">0,3632</td>
+<td style="text-align: left;">8,42%</td>
+</tr>
+<tr>
+<td style="text-align: left;">ROUGE-2</td>
+<td style="text-align: left;">0,1538</td>
+<td style="text-align: left;">0,1797</td>
+<td style="text-align: left;">16,84%</td>
+</tr>
+<tr>
+<td style="text-align: left;">ROUGE-L</td>
+<td style="text-align: left;">0,2329</td>
+<td style="text-align: left;">0,2671</td>
+<td style="text-align: left;">14,68%</td>
+</tr>
+<tr>
+<td style="text-align: left;">BLEU</td>
+<td style="text-align: left;">0,1062</td>
+<td style="text-align: left;">0,1253</td>
+<td style="text-align: left;">17,98%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cosine Similarity</td>
+<td style="text-align: left;">0,6543</td>
+<td style="text-align: left;">0,6849</td>
+<td style="text-align: left;">4,68%</td>
+</tr>
+<tr>
+<td style="text-align: left;">BERTScore (f-score)</td>
+<td style="text-align: left;">0,6789</td>
+<td style="text-align: left;">0,7004</td>
+<td style="text-align: left;">3,17%</td>
+</tr>
+<tr>
+<td style="text-align: left;">LLM-as-a-Judge (média)</td>
+<td style="text-align: left;">1,38</td>
+<td style="text-align: left;">1,59</td>
+<td style="text-align: left;">15,21%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="análise-quantitativa">Análise Quantitativa</h2>
+<p>A avaliação quantitativa iniciou-se com a análise das métricas
+lexicais, que mensuram a sobreposição de termos entre a resposta gerada
+pelo modelo e a resposta de referência. Este conjunto de métricas é
+essencial para verificar se o modelo aprendeu o vocabulário técnico e a
+terminologia específica do corpus institucional da UFS.</p>
+<h3 id="rouge">ROUGE</h3>
+<p>As métricas ROUGE-1, ROUGE-2 e ROUGE-L foram utilizadas para avaliar
+a fidelidade da geração textual em diferentes níveis de granularidade.
+Os resultados obtidos demonstram uma evolução consistente do modelo após
+o processo de <em>fine-tuning</em> via <em>LoRA</em>.</p>
+<ul>
+<li><p>ROUGE-1: O modelo treinado obteve um incremento de 8,42% em
+relação ao modelo base. Este ganho indica que o refinamento foi eficaz
+em adaptar o léxico do modelo aos termos fundamentais presentes nos
+documentos oficiais da universidade, como nomenclaturas de órgãos e
+siglas normativas.</p></li>
+<li><p>ROUGE-2: Esta métrica apresentou o ganho mais expressivo, com um
+aumento de 16,84%. Como o ROUGE-2 avalia bigramas (pares de palavras
+consecutivas), este resultado é um indicativo de que o modelo passou a
+reproduzir sequências de palavras mais coesas e naturais ao estilo
+institucional, superando a tendência do modelo base de gerar frases mais
+genéricas ou desconexas.</p></li>
+<li><p>ROUGE-L: O ROUGE-L apresentou uma melhoria de 14,68%. Este dado
+sugere que o modelo refinado foi capaz de estruturar as sentenças de
+forma mais alinhada à organização sintática encontrada nos documentos
+originais das resoluções e portarias.</p></li>
+</ul>
+<p>Em conjunto, os resultados das métricas ROUGE validam a eficácia do
+<em>fine-tuning</em> na adaptação do estilo de texto. O modelo base,
+embora capaz de gerar texto fluido, carecia da precisão terminológica
+necessária para o domínio institucional da UFS. O refinamento permitiu
+que o modelo incorporasse o padrão de escrita desses documentos,
+resultando em uma maior sobreposição lexical com os textos de referência
+utilizados como gabarito.</p>
+<h3 id="bleu">BLEU</h3>
+<p>Enquanto as métricas ROUGE priorizam a revocação <em>(recall)</em> do
+conteúdo, a métrica <em>BLEU</em> concentra-se na precisão, avaliando a
+proporção de n-gramas gerados que correspondem exatamente aos
+encontrados nos gabaritos de referência. Este indicador mede a exatidão
+sintática do modelo.</p>
+<p>O modelo refinado apresentou uma evolução de 17,98% nessa métrica.
+Ademais, observou-se uma melhora consistente na precisão de todos os
+níveis de n-gramas:</p>
+<ul>
+<li><p>1-grama: 0,27% para 0,30%</p></li>
+<li><p>2-gramas: 0,11% para 0,13%</p></li>
+<li><p>3-gramas: 0,08% para 0,09%</p></li>
+<li><p>4-gramas: 0,06% para 0,07%</p></li>
+</ul>
+<p>O incremento na métrica <em>BLEU</em> é particularmente relevante no
+domínio institucional. Em textos jurídicos e normativos, a ordem correta
+das palavras (como a disposição dos artigos ou o nome formal de uma
+portaria) é determinante para a validade da informação. O aumento
+observado indica que o modelo treinado tornou-se mais assertivo ao
+replicar as sequências de palavras utilizadas nos documentos oficiais da
+UFS, reduzindo a divergência lexical observada no modelo base.</p>
+<h3 id="cosine-similarity"><em>Cosine Similarity</em></h3>
+<p>Diferente das métricas lexicais, que se detêm na sobreposição direta
+de palavras, a Similaridade de Cosseno foi empregada para avaliar a
+proximidade semântica global entre a resposta gerada e o gabarito.</p>
+<p>O refinamento proporcionou uma melhoria de 4,68% na Similaridade de
+Cosseno. Esse incremento demonstra que o modelo, após o
+<em>fine-tuning</em>, passou a gerar respostas cujos vetores semânticos
+estão mais alinhados com o domínio institucional da UFS. Ou seja, o
+modelo refinado não apenas repete as palavras utilizadas na escrita dos
+documentos oficiais, mas também exibe uma maior coerência temática.
+Assim, essa métrica confirma que o modelo treinado gera respostas com a
+semântica mais próxima ao gabarito.</p>
+<h3 id="bertscore">BERTScore</h3>
+<p>O refinamento resultou em um incremento de 3,17% na pontuação F1
+semântica. Embora este ganho percentual pareça mais modesto do que os
+observados nas métricas lexicais (<em>ROUGE</em> e <em>BLEU</em>), ele
+demonstra um incremento semântico no modelo treinado, em relação ao
+modelo base. No contexto de modelos de linguagem de grande escala, como
+o Llama 3.1, a base já possui uma capacidade semântica prévia muito
+alta, obtida durante seu pré-treinamento; portanto, obter uma melhora
+após o <em>fine-tuning</em> indica que o modelo conseguiu ajustar seu
+vocabulário e a estrutura específica da UFS.</p>
+<p>Este aumento demonstra que o modelo treinado não apenas replica as
+palavras-chave, conforme sugerido pelas métricas de ROUGE e BLEU, mas
+também gera sentenças que, do ponto de vista semântico, estão mais
+próximas do caráter dos documentos oficiais. O fato de o BERTScore ter
+superado o modelo base reafirma que a adaptação via <em>LoRA</em> foi
+bem-sucedida em alinhar o modelo à linguagem da instituição, reduzindo o
+distanciamento entre as respostas geradas e o gabarito normativo, mesmo
+que a base de conhecimento original do modelo já fosse extensa.</p>
+<h3 id="llm-as-a-judge">LLM-as-a-Judge</h3>
+<p>Enquanto as métricas quantitativas anteriores focam na precisão
+terminológica e semântica, a avaliação via <em>LLM-as-a-Judge</em> visou
+verificar a aderência dos modelos à persona institucional da UFS. O
+modelo juiz, configurado com uma rubrica rigorosa, atribuiu notas de 1 a
+5 baseadas no alinhamento institucional e precisão factual do discurso.
+Os resultados estão consolidados na <a href="#tab-avaliacao_judge"
+data-reference-type="ref+label"
+data-reference="tab-avaliacao_judge">5.2</a>.</p>
+<div id="tab-avaliacao_judge">
+<table>
+<caption>Contagem das notas dadas pelo LLM-as-a-Judge para cada um dos
+modelos</caption>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Nota</strong></th>
+<th style="text-align: left;"><strong>Baseline (Llama 3.1
+Instruct)</strong></th>
+<th style="text-align: left;"><strong>Modelo Refinado</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">62</td>
+<td style="text-align: left;">47</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">38</td>
+<td style="text-align: left;">47</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">6</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Analisando as justificativas dadas pelo <em>judge</em> para cada uma
+das notas, temos:</p>
+<h4 id="modelo-base">Modelo Base</h4>
+<p>A análise das justificativas fornecidas pelo modelo juiz para o
+modelo base revelou padrões recorrentes de falhas que fundamentaram as
+notas atribuídas. A interpretação desses argumentos permite compreender
+as limitações do modelo <em>Llama 3.1 8B Instruct</em> quando operando
+sem refinamento no domínio institucional da UFS.</p>
+<p>A maioria das respostas (62%) recebeu a nota mínima, sendo
+caracterizada por falhas críticas, principalmente, nos seguintes
+aspectos:</p>
+<ol>
+<li><p><strong>Alucinação Factual Grave:</strong> O argumento mais
+frequente do juiz foi a invenção de dados. O modelo base frequentemente
+criava nomes de departamentos que não existem, citava portarias
+inexistentes ou errava a data de vigência de resoluções. O juiz apontou
+que essas respostas não apenas são inúteis, mas "potencialmente
+enganosas", pois o modelo prioriza a fluidez gramatical em detrimento da
+veracidade factual.</p></li>
+<li><p><strong>Quebra de Persona:</strong> O juiz identificou que o
+modelo base falha em adotar a linguagem burocrática da UFS, utilizando
+introduções genéricas como "De acordo com meu conhecimento
+atualizado...". Esse estilo foi categorizado como "informal e
+inadequado" para um comunicado oficial da universidade, indicando que o
+modelo, por padrão, comporta-se como um assistente de uso geral e não
+como um órgão oficial.</p></li>
+<li><p><strong>Alucinação de identidade:</strong> Frequentemente o
+modelo confunde a instituição "UFS" com "Universidade Federal do Sul",
+falhando em detectar o contexto específico ao qual a pergunta do usuário
+se refere.</p></li>
+<li><p><strong>Desconexão com a Fonte:</strong> Em diversos casos, o
+modelo simplesmente ignorou o contexto institucional, fornecendo
+respostas genéricas que não citam artigos, parágrafos ou resoluções
+específicas, falhando em atender à demanda técnica do usuário.</p></li>
+</ol>
+<p>Nas respostas que alcançaram a nota 2 (38%), o juiz reconheceu uma
+tentativa de acerto, mas destacou limitações que impediram uma avaliação
+positiva:</p>
+<ol>
+<li><p><strong>Conformidade Estilística Parcial:</strong> Diferente das
+notas 1, o modelo base conseguiu manter um tom formal em alguns
+momentos. O juiz observou que a linguagem se aproximava da comunicação
+institucional, porém, a resposta falhava ao não citar o documento
+oficial correto.</p></li>
+<li><p><strong>Intenção vs. Precisão:</strong> O juiz notou que, embora
+o modelo capturasse o sentido geral da pergunta, ele cometia erros em
+detalhes técnicos periféricos, como por exemplo, o nome de um
+homenageado em um ambulatório ou ano de uma portaria. Para o modelo
+juiz, esses erros "invalidam a informação principal", tornando a
+resposta perigosa para um contexto onde a precisão normativa é
+indispensável.</p></li>
+</ol>
+<p>Em resumo, o argumento central do juiz para as notas baixas do modelo
+base é a incompatibilidade entre o comportamento do modelo e a exigência
+de precisão factual do ambiente institucional da UFS. A análise confirma
+que, sem o <em>fine-tuning</em>, o modelo possui uma personalidade
+nativa de assistente genérico que, ao tentar simular uma autoridade
+institucional, acaba por gerar informações factualmente incorretas que
+comprometem a confiança no sistema.</p>
+<h4 id="modelo-refinado">Modelo refinado</h4>
+<p>A análise das justificativas fornecidas pelo modelo juiz para o
+modelo base revelou padrões recorrentes de falhas que fundamentaram as
+notas atribuídas. A interpretação desses argumentos permite compreender
+as limitações do modelo <em>Llama 3.1 8B Instruct</em> quando operando
+sem refinamento no domínio institucional da UFS. As justificativas para
+as notas 1 concentram-se em falhas críticas de identidade e
+utilidade:</p>
+<ol>
+<li><p><strong>Alucinação de Identidade:</strong> Um padrão identificado
+pelo juiz foi o modelo identificar erroneamente a sigla "UFS" como
+"Universidade Federal de São Carlos" ou "Universidade Federal do Sul",
+ao invés de "Universidade Federal de Sergipe". Apesar de o modelo
+treinado ter melhorado seu vocabulário institucional, ele ainda sofre de
+confusão persistente em sua autoidentificação.</p></li>
+<li><p><strong>Respostas Inúteis:</strong> O juiz penalizou severamente
+respostas que utilizaram <em>placeholders</em> (ex: "[nome do gestor]")
+em vez de fornecer a informação, ou respostas que se recusaram a
+fornecer dados diretos, indicando uma falha na capacidade do modelo de
+extrair e sintetizar o conteúdo do gabarito.</p></li>
+</ol>
+<p>Para as respostas de nota 2, o juiz determina que o modelo demonstrou
+maior aderência ao registro discursivo institucional da UFS, mas ainda
+falha em factualidade. Neste grupo, os principais padrões foram:</p>
+<ol>
+<li><p><strong>Tom de Voz Formal:</strong> O juiz frequentemente elogiou
+o tom formal e burocrático, indicando que o fine-tuning foi bem-sucedido
+na adaptação estilística.</p></li>
+<li><p><strong>Vícios de Linguagem:</strong> O juiz apontou como
+negativa a introdução "De acordo com meu conhecimento atualizado",
+considerando-a inadequada para a <em>persona</em> institucional, o que
+sugere que o modelo ainda carrega traços do treinamento original do
+Llama.</p></li>
+<li><p><strong>Inexatidão Factual:</strong> O argumento central para a
+nota 2 foi que, embora a resposta seja formal e bem estruturada, ela
+falha em dados específicos, como datas, nomes de cursos, valores ou
+nomes de responsáveis. O juiz descreve essas falhas como
+"invalidadoras", pois, no contexto de documentos oficiais, um erro de
+nome ou número altera completamente a utilidade da informação.</p></li>
+</ol>
+<p>Já para as 6 respostas avaliadas com nota 3, sendo essa a mais alta
+alcançada neste teste, as justificativas mais frequentes incluem:</p>
+<ol>
+<li><p><strong>Alinhamento Institucional:</strong> O juiz destacou que o
+modelo reconhece corretamente os órgãos da UFS, como por exemplo, CONEPE
+e CONSU e a terminologia acadêmica correta, demonstrando que o
+<em>fine-tuning</em> permitiu ao modelo navegar pela estrutura
+organizacional da universidade.</p></li>
+<li><p><strong>Captura de intenção:</strong> O modelo foi capaz de
+identificar corretamente o desfecho de solicitações (ex: confirmar a
+aprovação de um curso ou a negativa de um recurso).</p></li>
+</ol>
+<p>Segundo as justificativas, o que impediu o modelo de atingir notas 4
+ou 5 foi a falta de precisão em detalhes secundários, como omitir uma
+carga horária específica ou confundir o nome de uma especialização. O
+juiz reforça que a estrutura e o tom estão corretos, mas há falhas
+quanto à recuperação precisa dos dados.</p>
+<p>Embora o <em>fine-tuning</em> tenha trazido melhorias perceptíveis em
+relação ao estilo discursivo institucional no domínio da UFS, há falhas
+de factualidade, em que o modelo treinado confunde datas, números de
+documentos e nomes específicos.</p>
+<section id="footnotes" class="footnotes footnotes-end-of-document"
+role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1"><p><a
+href="https://sei.ufs.br/sei/publicacoes/controlador_publicacoes.php?acao=publicacao_pesquisar\&amp;id_orgao_publicacao=0"
+class="uri">https://sei.ufs.br/sei/publicacoes/controlador_publicacoes.php?acao=publicacao_pesquisar\&amp;id_orgao_publicacao=0</a><a
+href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a
+href="https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct"
+class="uri">https://huggingface.co/meta-llama/Llama-3.1-8B-Instruct</a><a
+href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+</body>
+</html>
