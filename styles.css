@@ -404,3 +404,166 @@ footer p {
         text-align: center;
     }
 }
+
+/* ==========================================
+   PÁGINAS DE POSTS (ARTIGOS)
+   ========================================== */
+.post-container {
+    max-width: 760px; /* Largura ideal para leitura de textos longos */
+    margin: 0 auto;
+    padding: 5rem 1.5rem 8rem;
+}
+
+/* Botão de Voltar */
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 2.5rem;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.btn-back:hover {
+    color: var(--accent-indigo);
+    transform: translateX(-4px);
+    text-decoration: none;
+}
+
+/* Cabeçalho do Artigo */
+.post-header {
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 2.5rem;
+}
+
+.post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin-bottom: 1.2rem;
+}
+
+.post-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.post-header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.25;
+    letter-spacing: -1px;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+/* Conteúdo do Texto */
+.post-content {
+    font-size: 1.1rem;
+    color: #cbd5e1; /* Tom cinza-claro muito mais confortável para ler no escuro */
+    line-height: 1.8;
+}
+
+.post-content p {
+    margin-bottom: 1.8rem;
+}
+
+.post-content strong {
+    color: var(--text-primary);
+}
+
+.post-content h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 3.5rem 0 1.2rem;
+    letter-spacing: -0.5px;
+}
+
+.post-content h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 2.5rem 0 1rem;
+}
+
+/* Listas */
+.post-content ul, 
+.post-content ol {
+    margin-bottom: 1.8rem;
+    padding-left: 1.5rem;
+}
+
+.post-content li {
+    margin-bottom: 0.6rem;
+}
+
+/* Links no texto */
+.post-content a {
+    color: var(--accent-indigo);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.2s ease;
+}
+
+.post-content a:hover {
+    color: var(--accent-emerald);
+}
+
+/* Citações / Destaques */
+.post-content blockquote {
+    border-left: 4px solid var(--accent-indigo);
+    background-color: rgba(99, 102, 241, 0.05);
+    padding: 1.2rem 1.8rem;
+    margin: 2.5rem 0;
+    border-radius: 0 12px 12px 0;
+    font-style: italic;
+    color: var(--text-muted);
+}
+
+/* Imagens do artigo */
+.post-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    margin: 3rem auto;
+    display: block;
+}
+
+/* Código em Linha */
+.post-content :not(pre) > code {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #f43f5e; /* Tom clássico para destacar variáveis e termos técnicos */
+    padding: 0.2rem 0.5rem;
+    border-radius: 6px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.9em;
+    word-break: break-word;
+}
+
+/* Blocos de Código (Ex: Python/SQL) */
+.post-content pre {
+    background-color: #020617; /* Fundo "carbono" escuro */
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin: 2.5rem 0;
+}
+
+.post-content pre code {
+    background-color: transparent;
+    color: #e2e8f0;
+    padding: 0;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
