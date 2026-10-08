@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Onde estão os votos que ainda podem ser conquistados em Aracaju</title>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <!-- PLOTLYJS:INICIO -->
 <script src="https://cdn.plot.ly/plotly-4.1.1.min.js" charset="utf-8"></script>
 <!-- PLOTLYJS:FIM -->
@@ -29,9 +30,15 @@
     h1 { font-size: 2.1rem; margin: 0 0 8px; }
     h2 { font-size: 1.5rem; margin: 2.4em 0 0.6em; }
     .meta { color: var(--suave); font-family: system-ui, sans-serif; font-size: 0.9rem; margin-bottom: 32px; }
-    .redes { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0 0 12px; font-family: system-ui, sans-serif; font-size: 0.9rem; }
-    .redes a { color: var(--destaque); text-decoration: none; }
-    .redes a:hover { text-decoration: underline; }
+    .redes { margin: 16px 0 20px; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .redes-titulo { display: block; margin-bottom: 10px; color: var(--suave); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
+    .redes-lista { display: flex; flex-wrap: wrap; gap: 10px; }
+    .rede { display: flex; align-items: center; gap: 6px; padding: 4px 10px 4px 8px; border: 1px solid var(--borda); border-radius: 8px; background: #fafafa; color: var(--texto); text-decoration: none; line-height: 1.2; transition: border-color .15s, box-shadow .15s, transform .15s; }
+    .rede:hover { border-color: var(--cor); box-shadow: 0 2px 8px rgba(0,0,0,.08); transform: translateY(-1px); }
+    .rede i, .rede img { flex: none; width: 12px; height: 12px; font-size: 12px; color: var(--cor); opacity: .8; }
+    .rede span { display: flex; flex-direction: column; }
+    .rede small { color: var(--suave); font-size: 0.7rem; font-weight: 500; }
+    .rede strong { font-size: 0.95rem; font-weight: 600; }
     blockquote {
       margin: 1.5em 0;
       padding: 14px 20px;
@@ -71,12 +78,15 @@
 
   <h1>Onde estão os votos que ainda podem ser conquistados em Aracaju: abstenções, brancos e nulos no 1º turno de 2026</h1>
   <nav class="redes" aria-label="Redes do autor">
-    <a href="https://luizsci42.github.io/" target="_blank" rel="noopener">Portfólio</a>
-    <a href="https://www.instagram.com/abayomi_rametj/" target="_blank" rel="noopener">Instagram</a>
-    <a href="https://github.com/luizsci42" target="_blank" rel="noopener">GitHub</a>
-    <a href="linkedin.com/in/luizsci42" target="_blank" rel="noopener">LinkedIn</a>
-    <a href="https://www.kaggle.com/luizfelipesouza" target="_blank" rel="noopener">Kaggle</a>
-    <a href="https://huggingface.co/luizsci42" target="_blank" rel="noopener">Hugging Face</a>
+    <span class="redes-titulo">Encontre-me nas redes</span>
+    <div class="redes-lista">
+      <a class="rede" style="--cor:#6366f1" href="https://luizsci42.github.io/" target="_blank" rel="noopener"><i class='bx bx-globe'></i><span><small>Portfólio</small><strong>luizsci42.github.io</strong></span></a>
+      <a class="rede" style="--cor:#e4405f" href="https://www.instagram.com/abayomi_rametj/" target="_blank" rel="noopener"><i class='bx bxl-instagram'></i><span><small>Instagram</small><strong>@abayomi_rametj</strong></span></a>
+      <a class="rede" style="--cor:#181717" href="https://github.com/luizsci42" target="_blank" rel="noopener"><i class='bx bxl-github'></i><span><small>GitHub</small><strong>@luizsci42</strong></span></a>
+      <a class="rede" style="--cor:#0a66c2" href="https://www.linkedin.com/in/luizsci42" target="_blank" rel="noopener"><i class='bx bxl-linkedin-square'></i><span><small>LinkedIn</small><strong>in/luizsci42</strong></span></a>
+      <!-- <a class="rede" style="--cor:#20beff" href="https://www.kaggle.com/luizfelipesouza" target="_blank" rel="noopener"><img src="https://cdn.simpleicons.org/kaggle/20BEFF" alt=""><span><small>Kaggle</small><strong>@luizfelipesouza</strong></span></a> -->
+      <!-- <a class="rede" style="--cor:#ffd21e" href="https://huggingface.co/luizsci42" target="_blank" rel="noopener"><img src="https://cdn.simpleicons.org/huggingface/FFD21E" alt=""><span><small>Hugging Face</small><strong>@luizsci42</strong></span></a> -->
+    </div>
   </nav>
   <p class="meta">Cerca de 8 minutos de leitura</p>
 
