@@ -56,6 +56,10 @@
     li { margin-bottom: 0.4em; }
     hr { border: 0; border-top: 1px solid var(--borda); margin: 2.5em 0; }
     .nota { font-size: 0.9rem; color: var(--suave); }
+    .autor { display: flex; align-items: center; gap: 24px; margin-top: 1em; }
+    .autor img { flex: none; width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 3px solid var(--borda); }
+    .autor p { margin: 0; }
+    @media (max-width: 520px) { .autor { flex-direction: column; text-align: center; } }
   </style>
 </head>
 <body>
@@ -254,6 +258,26 @@ gd.on('plotly_click', function (e) {
     <li><strong>Unidades pequenas:</strong> municípios e bairros com poucos eleitores têm percentuais que variam muito. Os rankings de proporção consideram apenas municípios com mais de 5 mil eleitores e bairros com mais de 3 mil.</li>
   </ul>
   <p class="nota"><em>Análise feita em Python (pandas, geopandas e plotly).</em></p>
+
+  <hr>
+
+  <h2>Quem sou eu</h2>
+  <div class="autor">
+    <img src="../img/luiz-felipe.jpg" alt="Foto de Luiz Felipe Souza">
+    <p>Oi, eu sou o Luiz Felipe. Trabalho como <strong>cientista de dados no Grupo Boticário</strong> e ainda estou na estrada da <strong>Ciência da Computação na Universidade Federal de Sergipe</strong>. Fora das telas, sou <strong>angoleiro na Lineart Capoeira Angola</strong> e <strong>nacionalista negro</strong>, de orientação Garveyista.</p>
+  </div>
+
+  <nav class="redes" aria-label="Redes do autor">
+    <span class="redes-titulo">Encontre-me nas redes</span>
+    <div class="redes-lista">
+      <a class="rede" style="--cor:#6366f1" href="https://luizsci42.github.io/" target="_blank" rel="noopener"><i class='bx bx-globe'></i><span><small>Portfólio</small><strong>luizsci42.github.io</strong></span></a>
+      <a class="rede" style="--cor:#e4405f" href="https://www.instagram.com/abayomi_rametj/" target="_blank" rel="noopener"><i class='bx bxl-instagram'></i><span><small>Instagram</small><strong>@abayomi_rametj</strong></span></a>
+      <a class="rede" style="--cor:#181717" href="https://github.com/luizsci42" target="_blank" rel="noopener"><i class='bx bxl-github'></i><span><small>GitHub</small><strong>@luizsci42</strong></span></a>
+      <a class="rede" style="--cor:#0a66c2" href="https://www.linkedin.com/in/luizsci42" target="_blank" rel="noopener"><i class='bx bxl-linkedin-square'></i><span><small>LinkedIn</small><strong>in/luizsci42</strong></span></a>
+      <!-- <a class="rede" style="--cor:#20beff" href="https://www.kaggle.com/luizfelipesouza" target="_blank" rel="noopener"><img src="https://cdn.simpleicons.org/kaggle/20BEFF" alt=""><span><small>Kaggle</small><strong>@luizfelipesouza</strong></span></a> -->
+      <!-- <a class="rede" style="--cor:#ffd21e" href="https://huggingface.co/luizsci42" target="_blank" rel="noopener"><img src="https://cdn.simpleicons.org/huggingface/FFD21E" alt=""><span><small>Hugging Face</small><strong>@luizsci42</strong></span></a> -->
+    </div>
+  </nav>
 
 </main>
 </body>
